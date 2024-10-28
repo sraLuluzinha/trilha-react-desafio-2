@@ -15,7 +15,6 @@ function App() {
 
 
   const handleSearchRepo = async () => {
-
     const {data} = await api.get(`repos/${currentRepo}`)
 
     if(data.id){
@@ -36,15 +35,20 @@ function App() {
   const handleRemoveRepo = (id) => {
     console.log('Removendo registro', id);
 
-    // utilizar filter.
+    const filteredRepos = repos.filter(repo => repo.id !== id);
+    setRepos(filteredRepos);
   }
+  
 
 
   return (
     <Container>
       <img src={gitLogo} width={72} height={72} alt="github logo"/>
+
       <Input value={currentRepo} onChange={(e) => setCurrentRepo(e.target.value)} />
+
       <Button onClick={handleSearchRepo}/>
+
       {repos.map(repo => <ItemRepo handleRemoveRepo={handleRemoveRepo} repo={repo}/>)}
     </Container>
   );
